@@ -49,7 +49,6 @@ public class TransactionController {
         BalanceDTO balanceDTO = new BalanceDTO();
         balanceDTO.setValue(transaction.getAmount());
         balanceDTO.setBankId(transaction.getBank().getId());
-        balanceDTO.setCurrencyCode(transaction.getCurrency().getCode());
         balanceDTO.setTime(transaction.getTransactionTime());
         balanceDTO.setUserId(transaction.getUserId());
         balanceDTO.setTransactionType(transaction.getType().getType_id());

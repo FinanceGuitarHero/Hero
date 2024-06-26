@@ -32,9 +32,6 @@ public class BankService {
                 .orElseThrow(() -> new IllegalArgumentException("Bank not found with id: " + id));
         bank.setBankName(bankDetails.getBankName());
         bank.setBankCode(bankDetails.getBankCode());
-        bank.setAddress(bankDetails.getAddress());
-        bank.setPhoneNumber(bankDetails.getPhoneNumber());
-        bank.setWebsite(bankDetails.getWebsite());
         bank.setName(bankDetails.getName());
         return bankRepository.save(bank);
     }

@@ -12,7 +12,6 @@ public class BalanceDTO {
     private Integer transactionType;
     private BigDecimal value;
     private Integer bankId;
-    private String currencyCode;
     private LocalDateTime time;
 
 }

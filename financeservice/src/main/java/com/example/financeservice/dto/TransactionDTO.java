@@ -13,6 +13,5 @@ public class TransactionDTO {
     private Integer categoryId;
     private Integer statusId;
     private String description;
-    private String currencyCode;
     private Integer bankId;
 }
