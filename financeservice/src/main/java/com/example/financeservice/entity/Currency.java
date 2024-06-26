@@ -1,9 +1,11 @@
 package com.example.financeservice.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "currencies")
+@Data
 public class Currency {
 
     @Id
@@ -14,28 +16,4 @@ public class Currency {
     private String currencyName;
     private String symbol;
 
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String currencyCode) {
-        this.code = currencyCode;
-    }
-
-    public String getCurrencyName() {
-        return currencyName;
-    }
-
-    public void setCurrencyName(String currencyName) {
-        this.currencyName = currencyName;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
 }

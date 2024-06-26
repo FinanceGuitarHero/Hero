@@ -1,9 +1,11 @@
 package com.example.financeservice.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "categories")
+@Data
 public class Category {
 
     @Id
@@ -14,28 +16,4 @@ public class Category {
     private String categoryName;
 
     private String description;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer categoryId) {
-        this.id = categoryId;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
