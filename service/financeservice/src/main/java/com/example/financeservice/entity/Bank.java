@@ -12,9 +12,6 @@ public class Bank {
 
     private String bankName;
     private String bankCode;
-    private String address;
-    private String phoneNumber;
-    private String website;
     private String name;
 
 
@@ -40,30 +37,6 @@ public class Bank {
 
     public void setBankCode(String bankCode) {
         this.bankCode = bankCode;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
     }
 
     public String getName() {
