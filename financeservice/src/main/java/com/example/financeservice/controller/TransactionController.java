@@ -51,7 +51,7 @@ public class TransactionController {
         balanceDTO.setBankId(transaction.getBank().getId());
         balanceDTO.setTime(transaction.getTransactionTime());
         balanceDTO.setUserId(transaction.getUserId());
-        balanceDTO.setTransactionType(transaction.getType().getType_id());
+        balanceDTO.setTransactionType(transaction.getType().getId());
 
         balanceService.updateBalance(balanceDTO);
 

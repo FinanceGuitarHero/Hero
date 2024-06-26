@@ -76,7 +76,7 @@ public class TransactionService {
 
     @Transactional
     public Optional<Transaction> updateTransaction(Long transactionId, Transaction transaction) {
-        Optional<Type> type = typeRepository.findById(transaction.getType().getType_id());
+        Optional<Type> type = typeRepository.findById(transaction.getType().getId());
         Optional<Category> category = categoryRepository.findById(transaction.getCategory().getId());
         Optional<Status> status = statusRepository.findById(transaction.getStatus().getId());
         Optional<Bank> bank = bankRepository.findById(transaction.getBank().getId());
