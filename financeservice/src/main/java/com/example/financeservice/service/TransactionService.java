@@ -22,8 +22,6 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    @Autowired
-    private CurrencyService currencyService;
 
     @Autowired
     private TypeRepository typeRepository;
@@ -38,18 +36,14 @@ public class TransactionService {
     private BankRepository bankRepository;
 
     @Autowired
-    private CurrencyRepository currencyRepository;
-
-    @Autowired
     private ObjectMapper objectMapper;
 
     public Transaction validation(TransactionDTO transactionDTO){
         Optional<Type> type = typeRepository.findById(transactionDTO.getTypeId());
         Optional<Bank> bank = bankRepository.findById(transactionDTO.getBankId());
-        Optional<Currency> currency = currencyRepository.findByCurrency_code(transactionDTO.getCurrencyCode());
         Optional<Category> category = categoryRepository.findById(transactionDTO.getCategoryId());
         Optional<Status> status = statusRepository.findById(transactionDTO.getStatusId());
-        if (type.isEmpty() || bank.isEmpty() || currency.isEmpty() || category.isEmpty() || status.isEmpty()) {
+        if (type.isEmpty() || bank.isEmpty() || category.isEmpty() || status.isEmpty()) {
             return null;
         }
         Transaction transaction = new Transaction();
@@ -57,7 +51,6 @@ public class TransactionService {
         transaction.setDescription(transactionDTO.getDescription());
         transaction.setType(type.get());
         transaction.setBank(bank.get());
-        transaction.setCurrency(currency.get());
         transaction.setCategory(category.get());
         transaction.setStatus(status.get());
         transaction.setAmount(transactionDTO.getAmount());
@@ -83,13 +76,12 @@ public class TransactionService {
 
     @Transactional
     public Optional<Transaction> updateTransaction(Long transactionId, Transaction transaction) {
-        Optional<Type> type = typeRepository.findById(transaction.getType().getType_id());
+        Optional<Type> type = typeRepository.findById(transaction.getType().getId());
         Optional<Category> category = categoryRepository.findById(transaction.getCategory().getId());
         Optional<Status> status = statusRepository.findById(transaction.getStatus().getId());
         Optional<Bank> bank = bankRepository.findById(transaction.getBank().getId());
-        Optional<Currency> currency = currencyRepository.findByCurrency_code(transaction.getCurrency().getCode());
 
-        if (type.isEmpty() || category.isEmpty() || status.isEmpty() || bank.isEmpty() || currency.isEmpty()) {
+        if (type.isEmpty() || category.isEmpty() || status.isEmpty() || bank.isEmpty()) {
             throw new IllegalArgumentException("One or more fields are invalid");
         }
 
@@ -101,7 +93,6 @@ public class TransactionService {
         updatedTransaction.get().setBank(bank.get());
         updatedTransaction.get().setCategory(category.get());
         updatedTransaction.get().setStatus(status.get());
-        updatedTransaction.get().setCurrency(currency.get());
         updatedTransaction.get().setUserId(transaction.getUserId());
         updatedTransaction.get().setTransactionTime(LocalDateTime.now());
         updatedTransaction.get().setAmount(transaction.getAmount());

@@ -19,10 +19,6 @@ public class Balance {
     @JoinColumn(name = "bank_id")
     private Bank bank;
 
-    @ManyToOne
-    @JoinColumn(name = "currency_code")
-    private Currency currency;
-
     @Column(name = "user_id")
     private Integer userId;
 

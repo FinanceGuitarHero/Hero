@@ -21,10 +21,6 @@ public class Transaction {
     private Bank bank;
 
     @ManyToOne
-    @JoinColumn(name = "currency_code")
-    private Currency currency;
-
-    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
