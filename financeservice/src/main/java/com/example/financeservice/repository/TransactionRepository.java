@@ -32,5 +32,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findByUserIdAndTransactionTimeBetween(Integer userId, LocalDateTime startDate, LocalDateTime endDate);
 
     List<Transaction> findByUserIdAndTypeIdAndCategoryIdAndStatusIdAndTransactionTimeBetweenAndAmountGreaterThanEqualAndAmountLessThanEqual(
-            Integer userId, Integer typeId, Integer categoryId, Integer statusId, LocalDateTime startDate, LocalDateTime endDate, BigDecimal minAmount, BigDecimal maxAmount);
+           Integer userId, Integer typeId, Integer categoryId, Integer statusId, LocalDateTime startDate, LocalDateTime endDate, BigDecimal minAmount, BigDecimal maxAmount);
 }

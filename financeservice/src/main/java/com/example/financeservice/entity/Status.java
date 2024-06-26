@@ -1,7 +1,9 @@
 package com.example.financeservice.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "statuses")
 public class Status {
@@ -15,20 +17,4 @@ public class Status {
             ;
     private String description;
 
-    public Integer getId() {
-        return id;
-    }
-    public String getStatusName(){
-        return statusName;
-    }
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public void setStatusName(String status_name) {
-        this.statusName = status_name;
-    }
 }

@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: financeservice
   datasource:
     url: jdbc:postgresql://localhost:5432/finance_service_db
     username: admin
