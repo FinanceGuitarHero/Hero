@@ -2,12 +2,10 @@ package com.example.bot.commands;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.springframework.stereotype.Component;
 
-public class StartCommand implements Command {
-
-    public static final String NAME = "/start";
-    private String DESCRIPTION = "зарегистрироваться в боте";
+public class AddBankCommand implements Command {
+    public static String NAME = "/add_bank";
+    private String DESCRIPTION = "добавить банк";
 
     @Override
     public String getName() {
@@ -22,6 +20,6 @@ public class StartCommand implements Command {
     @Override
     public SendMessage handle(Update update) {
         long chatId = update.message().chat().id();
-        return new SendMessage(chatId, "Вы успешно зарегистрировались!");
+        return new SendMessage(chatId, NAME);
     }
 }
