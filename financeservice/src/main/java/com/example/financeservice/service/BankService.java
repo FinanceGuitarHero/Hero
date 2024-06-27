@@ -32,7 +32,6 @@ public class BankService {
                 .orElseThrow(() -> new IllegalArgumentException("Bank not found with id: " + id));
         bank.setBankName(bankDetails.getBankName());
         bank.setBankCode(bankDetails.getBankCode());
-        bank.setName(bankDetails.getName());
         return bankRepository.save(bank);
     }
 
@@ -40,5 +39,10 @@ public class BankService {
         Bank bank = bankRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Bank not found with id: " + id));
         bankRepository.delete(bank);
+    }
+
+    public Bank getBankByName(String bank) {
+        var bankInRepo = bankRepository.findByName(bank);
+        return bankInRepo.orElseGet(() -> createBank(new Bank(bank)));
     }
 }

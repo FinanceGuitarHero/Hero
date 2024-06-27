@@ -1,11 +1,9 @@
 package com.example.financeservice.controller;
 
-import com.example.financeservice.entity.*;
-import com.example.financeservice.service.*;
-import com.example.financeservice.repository.*;
-import com.example.financeservice.dto.*;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.financeservice.entity.Transaction;
+import com.example.financeservice.repository.TransactionRepository;
+import com.example.financeservice.service.BalanceService;
+import com.example.financeservice.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -41,33 +38,33 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDTO transactionDTO) throws JsonProcessingException {
-        Transaction transaction = transactionService.validation(transactionDTO);
-        if (transaction==null){
-            return ResponseEntity.notFound().build();
-        }
-        BalanceDTO balanceDTO = new BalanceDTO();
-        balanceDTO.setValue(transaction.getAmount());
-        balanceDTO.setBankId(transaction.getBank().getId());
-        balanceDTO.setTime(transaction.getTransactionTime());
-        balanceDTO.setUserId(transaction.getUserId());
-        balanceDTO.setTransactionType(transaction.getType().getId());
+//    public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDTO transactionDTO) throws JsonProcessingException {
+//        Transaction transaction = transactionService.validation(transactionDTO);
+//        if (transaction==null){
+//            return ResponseEntity.notFound().build();
+//        }
+//        BalanceDTO balanceDTO = new BalanceDTO();
+//        balanceDTO.setValue(transaction.getAmount());
+//        balanceDTO.setBankId(transaction.getBank().getId());
+//        balanceDTO.setTime(transaction.getTransactionTime());
+//        balanceDTO.setUserId(transaction.getUserId());
+//        balanceDTO.setTransactionType(transaction.getType().getId());
+//
+//        balanceService.updateBalance(balanceDTO);
+//
+//        Transaction createdTransaction = transactionService.createTransaction(transaction);
+//        return ResponseEntity.ok(createdTransaction);
+//    }
 
-        balanceService.updateBalance(balanceDTO);
-
-        Transaction createdTransaction = transactionService.createTransaction(transaction);
-        return ResponseEntity.ok(createdTransaction);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody TransactionDTO transactionDTO) {
-        Transaction transaction = transactionService.validation(transactionDTO);
-        if (transaction==null || transactionRepository.findById(id).isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        Optional<Transaction> updatedTransaction = transactionService.updateTransaction(id, transaction);
-        return ResponseEntity.ok(updatedTransaction.get());
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody TransactionDTO transactionDTO) {
+//        Transaction transaction = transactionService.validation(transactionDTO);
+//        if (transaction==null || transactionRepository.findById(id).isEmpty()){
+//            return ResponseEntity.notFound().build();
+//        }
+//        Optional<Transaction> updatedTransaction = transactionService.updateTransaction(id, transaction);
+//        return ResponseEntity.ok(updatedTransaction.get());
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {

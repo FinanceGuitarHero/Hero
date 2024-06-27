@@ -43,7 +43,7 @@ public class BalanceController {
     }
 
     @PostMapping("/create/{userId}/{bankId}/{currencyCode}")
-    public void createNewBalance(@PathVariable Integer userId, @PathVariable Integer bankId, @PathVariable String currencyCode) {
+    public void createNewBalance(@PathVariable String userId, @PathVariable Integer bankId, @PathVariable String currencyCode) {
         balanceService.createNewBalance(userId, bankId, currencyCode);
     }
 

@@ -20,6 +20,8 @@ public class BalanceService {
     @Autowired
     private BalanceRepository balanceRepository;
 
+    @Autowired UserService userService;
+
     @Transactional
     public Optional<Balance> updateBalance(BalanceDTO balanceDTO) {
         Integer userId = balanceDTO.getUserId();
@@ -65,11 +67,11 @@ public class BalanceService {
         return balanceRepository.findAllByBank(bank.get());
     }
 
-    public void createNewBalance(Integer userId, Integer bankId, String currencyCode) {
+    public void createNewBalance(String userId, Integer bankId, String currencyCode) {
         Bank bank = bankRepository.findById(bankId).get();
         Balance balance = new Balance();
         balance.setBank(bank);
-        balance.setUserId(userId);
+        balance.setAppUserId(userService.getUserById(userId));
         balanceRepository.save(balance);
     }
     public void deleteBalance(Integer userId, Integer bankId, String currencyCode) {
