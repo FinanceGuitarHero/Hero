@@ -32,19 +32,14 @@ public class BalanceController {
         return balanceService.getBalanceById(balanceId);
     }
 
-    @GetMapping("/currency/{currencyCode}")
-    public List<Balance> getBalanceByCurrencyCode(@PathVariable String currencyCode) {
-        return balanceService.getBalancesByCurrencyCode(currencyCode);
-    }
-
     @GetMapping("/bank/{bankId}")
     public List<Balance> getBalanceByBankId(@PathVariable Integer bankId) {
         return balanceService.getBalancesByBankId(bankId);
     }
 
     @GetMapping("/{userId}/{bankId}/{currencyCode}")
-    public Optional<Balance> getBalanceByUserIdAndBankIdAndCurrencyCode(@PathVariable Integer userId, @PathVariable Integer bankId, @PathVariable String currencyCode) {
-        return balanceService.getBalanceByUserIdAndBankIdAndCurrencyCode(userId, bankId, currencyCode);
+    public Optional<Balance> getBalanceByUserIdAndBankId(@PathVariable Integer userId, @PathVariable Integer bankId) {
+        return balanceService.getBalanceByUserIdAndBankId(userId, bankId);
     }
 
     @PostMapping("/create/{userId}/{bankId}/{currencyCode}")

@@ -1,9 +1,11 @@
 package com.example.financeservice.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "banks")
+@Data
 public class Bank {
 
     @Id
@@ -14,36 +16,4 @@ public class Bank {
     private String bankCode;
     private String name;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer bankId) {
-        this.id = bankId;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getBankCode() {
-        return bankCode;
-    }
-
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

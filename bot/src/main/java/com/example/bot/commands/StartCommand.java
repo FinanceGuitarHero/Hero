@@ -21,9 +21,6 @@ public class StartCommand implements Command {
 
     @Override
     public SendMessage handle(Update update) {
-        long chatId = update.message().chat().id();
-        String chatMessage = update.message().text();
-
-        return new SendMessage(chatId, "Hello world! You wrote: " + chatMessage);
+        return null;
     }
 }

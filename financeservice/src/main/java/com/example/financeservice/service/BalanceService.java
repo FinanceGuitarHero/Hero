@@ -16,10 +16,7 @@ public class BalanceService {
 
     @Autowired
     private BankRepository bankRepository;
-
-    @Autowired
-    private CurrencyRepository currencyRepository;
-
+    
     @Autowired
     private BalanceRepository balanceRepository;
 
@@ -27,13 +24,12 @@ public class BalanceService {
     public Optional<Balance> updateBalance(BalanceDTO balanceDTO) {
         Integer userId = balanceDTO.getUserId();
         Optional<Bank> bank = bankRepository.findById(balanceDTO.getBankId());
-        Optional<Currency> currency = currencyRepository.findByCurrency_code(balanceDTO.getCurrencyCode());
 
-        if (currency.isPresent() && bank.isPresent()) {
+        if (bank.isPresent()) {
 
-            Optional<Balance> optionalBalance = balanceRepository.findByCurrencyAndBankAndUserId(currency.get(), bank.get(), userId);
+            Optional<Balance> optionalBalance = balanceRepository.findByBankAndUserId(bank.get(), userId);
             if (optionalBalance.isEmpty()) {
-                throw new IllegalArgumentException("Balance not found for user_id: " + userId + ", bank_id: " + balanceDTO.getBankId() + ", currency_code: " + balanceDTO.getCurrencyCode());
+                throw new IllegalArgumentException("Balance not found for user_id: " + userId + ", bank_id: " + balanceDTO.getBankId());
             }
 
             Balance balance = optionalBalance.get();
@@ -58,20 +54,12 @@ public class BalanceService {
         return balanceRepository.findAllByUserId(id);
     }
 
-    public Optional<Balance> getBalanceByUserIdAndBankIdAndCurrencyCode(Integer userId, Integer bankId, String currencyCode) {
-        Optional<Bank> bank = bankRepository.findById(bankId);
-        Optional<Currency> currency = currencyRepository.findByCurrency_code(currencyCode);
-        return balanceRepository.findByCurrencyAndBankAndUserId(currency.get(), bank.get(), userId);
-    }
+    
 
     public List<Balance> getAllBalances(){
         return balanceRepository.findAll();
     }
-
-    public List<Balance> getBalancesByCurrencyCode(String currencyCode){
-        Optional<Currency> currency = currencyRepository.findByCurrency_code(currencyCode);
-        return balanceRepository.findAllByCurrency(currency.get());
-    }
+    
     public List<Balance> getBalancesByBankId(Integer bankId){
         Optional<Bank> bank = bankRepository.findById(bankId);
         return balanceRepository.findAllByBank(bank.get());
@@ -79,17 +67,14 @@ public class BalanceService {
 
     public void createNewBalance(Integer userId, Integer bankId, String currencyCode) {
         Bank bank = bankRepository.findById(bankId).get();
-        Currency currency = currencyRepository.findByCurrency_code(currencyCode).get();
         Balance balance = new Balance();
         balance.setBank(bank);
-        balance.setCurrency(currency);
         balance.setUserId(userId);
         balanceRepository.save(balance);
     }
     public void deleteBalance(Integer userId, Integer bankId, String currencyCode) {
         Optional<Bank> bank = bankRepository.findById(bankId);
-        Optional<Currency> currency = currencyRepository.findByCurrency_code(currencyCode);
-        Optional<Balance> optionalBalance = balanceRepository.findByCurrencyAndBankAndUserId(currency.get(), bank.get(), userId);
+        Optional<Balance> optionalBalance = balanceRepository.findByBankAndUserId(bank.get(), userId);
         if (optionalBalance.isEmpty()) {
             throw new IllegalArgumentException("Balance not found for user_id: " + userId + ", bank_id: " + bankId + ", currency_code: " + currencyCode);
         }
@@ -99,5 +84,10 @@ public class BalanceService {
 
     public List<Balance> getBalanceById(Integer balanceId) {
         return balanceRepository.findByUserId(balanceId);
+    }
+
+    public Optional<Balance> getBalanceByUserIdAndBankId(Integer userId, Integer bankId) {
+        Optional<Bank> bank = bankRepository.findById(bankId);
+        return balanceRepository.findByBankAndUserId(bank.get(), userId);
     }
 }
