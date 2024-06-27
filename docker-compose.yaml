@@ -28,6 +28,6 @@ services:
     image: bot-service
     build: bot
     ports:
-      - '8081:8080'
+      - '8090:8090'
     depends_on:
       - finance-service
