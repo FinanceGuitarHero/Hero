@@ -2,10 +2,12 @@ package com.example.financeservice.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "banks")
 @Data
+@NoArgsConstructor
 public class Bank {
 
     @Id
@@ -14,6 +16,8 @@ public class Bank {
 
     private String bankName;
     private String bankCode;
-    private String name;
 
+    public Bank(String bankName) {
+        this.bankName = bankName;
+    }
 }

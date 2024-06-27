@@ -20,7 +20,7 @@ public class Balance {
     private Bank bank;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private AppUser appUserId;
 
     private BigDecimal amount;
     private LocalDateTime last_updated;

@@ -1,11 +1,9 @@
 package com.example.financeservice.service;
 
+import com.example.financeservice.entity.Bank;
+import com.example.financeservice.entity.Category;
+import com.example.financeservice.entity.Transaction;
 import com.example.financeservice.repository.*;
-import com.example.financeservice.entity.*;
-import com.example.financeservice.service.*;
-import com.example.financeservice.dto.*;
-
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,15 +20,8 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-
-    @Autowired
-    private TypeRepository typeRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
-    @Autowired
-    private StatusRepository statusRepository;
 
     @Autowired
     private BankRepository bankRepository;
@@ -38,25 +29,23 @@ public class TransactionService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public Transaction validation(TransactionDTO transactionDTO){
-        Optional<Type> type = typeRepository.findById(transactionDTO.getTypeId());
-        Optional<Bank> bank = bankRepository.findById(transactionDTO.getBankId());
-        Optional<Category> category = categoryRepository.findById(transactionDTO.getCategoryId());
-        Optional<Status> status = statusRepository.findById(transactionDTO.getStatusId());
-        if (type.isEmpty() || bank.isEmpty() || category.isEmpty() || status.isEmpty()) {
-            return null;
-        }
-        Transaction transaction = new Transaction();
-        transaction.setTransactionTime(LocalDateTime.now());
-        transaction.setDescription(transactionDTO.getDescription());
-        transaction.setType(type.get());
-        transaction.setBank(bank.get());
-        transaction.setCategory(category.get());
-        transaction.setStatus(status.get());
-        transaction.setAmount(transactionDTO.getAmount());
-        transaction.setUserId(transactionDTO.getUserId());
-        return transaction;
-    }
+//    public Transaction validation(TransactionDTO transactionDTO){
+//        Optional<Category> category = categoryRepository.findById(transactionDTO.getCategoryId());
+//        Optional<Status> status = statusRepository.findById(transactionDTO.getStatusId());
+//        if (type.isEmpty() || bank.isEmpty() || category.isEmpty() || status.isEmpty()) {
+//            return null;
+//        }
+//        Transaction transaction = new Transaction();
+//        transaction.setTransactionTime(LocalDateTime.now());
+//        transaction.setDescription(transactionDTO.getDescription());
+//        transaction.setType(type.get());
+//        transaction.setBank(bank.get());
+//        transaction.setCategory(category.get());
+//        transaction.setStatus(status.get());
+//        transaction.setAmount(transactionDTO.getAmount());
+//        transaction.setAppUserId(transactionDTO.getAppUserId());
+//        return transaction;
+//    }
 
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
@@ -76,12 +65,10 @@ public class TransactionService {
 
     @Transactional
     public Optional<Transaction> updateTransaction(Long transactionId, Transaction transaction) {
-        Optional<Type> type = typeRepository.findById(transaction.getType().getId());
         Optional<Category> category = categoryRepository.findById(transaction.getCategory().getId());
-        Optional<Status> status = statusRepository.findById(transaction.getStatus().getId());
         Optional<Bank> bank = bankRepository.findById(transaction.getBank().getId());
 
-        if (type.isEmpty() || category.isEmpty() || status.isEmpty() || bank.isEmpty()) {
+        if (category.isEmpty() || bank.isEmpty()) {
             throw new IllegalArgumentException("One or more fields are invalid");
         }
 
@@ -89,11 +76,8 @@ public class TransactionService {
         if (updatedTransaction.isEmpty()) {
             throw new IllegalArgumentException("Transaction not found");
         }
-        updatedTransaction.get().setType(type.get());
         updatedTransaction.get().setBank(bank.get());
         updatedTransaction.get().setCategory(category.get());
-        updatedTransaction.get().setStatus(status.get());
-        updatedTransaction.get().setUserId(transaction.getUserId());
         updatedTransaction.get().setTransactionTime(LocalDateTime.now());
         updatedTransaction.get().setAmount(transaction.getAmount());
         updatedTransaction.get().setDescription(transaction.getDescription());

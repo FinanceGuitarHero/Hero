@@ -40,4 +40,9 @@ public class CategoryService {
                 .orElseThrow(() -> new IllegalArgumentException("Category not found with id: " + id));
         categoryRepository.delete(category);
     }
+
+    public Category getCategoryByName(String category) {
+        var cat = categoryRepository.findByCategory_name(category);
+        return cat.orElse(null);
+    }
 }
